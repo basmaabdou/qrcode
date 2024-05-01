@@ -44,6 +44,7 @@ class ProfileCubit extends Cubit<ProfileStates> {
       print(exchangeCoins!.message);
       print(exchangeCoins!.success);
       getProfileData();
+      Get.snackbar("Success", "The discount was successful");
       emit(SuccessExchangeCoinsStates());
     }).catchError((error) {
       emit(ErrorExchangeCoinsStates());
