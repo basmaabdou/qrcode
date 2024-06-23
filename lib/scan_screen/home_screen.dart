@@ -119,7 +119,9 @@ class HomeScreen extends StatelessWidget {
                       builder: (context) => ElevatedButton(
                         onPressed: () {
                            ProfileCubit.get(context).getExchangeCoins(
-                               amount: amountController.text);
+                               amount: amountController.text,
+                               id: userIdController.text
+                           );
                         },
                         child: Text('Exchange Coins'),
                         style: ElevatedButton.styleFrom(backgroundColor: defaultColor),

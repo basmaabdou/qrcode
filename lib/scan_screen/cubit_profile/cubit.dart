@@ -35,10 +35,12 @@ class ProfileCubit extends Cubit<ProfileStates> {
 
   void getExchangeCoins({
     required String amount,
+    required String id,
   }) {
     emit(LoadingExchangeCoinsStates());
     DioHelper.postData(url: QRCODE, token: token, data: {
       'amount': amount,
+      'id':id
     }).then((value) {
       exchangeCoins = ExchangeCoins.fromJson(value.data);
       print(exchangeCoins!.message);
