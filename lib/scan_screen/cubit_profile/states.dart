@@ -1,5 +1,6 @@
 
 
+import '../../model/exchange_coins_resonse.dart';
 import '../../model/ger_coins_response.dart';
 
 abstract class ProfileStates{}
@@ -23,7 +24,11 @@ class ErrorOrderStates extends ProfileStates{}
 
 class LoadingExchangeCoinsStates extends ProfileStates{}
 
-class SuccessExchangeCoinsStates extends ProfileStates{}
+class SuccessExchangeCoinsStates extends ProfileStates{
+  final ExchangeCoins exchangeCoins;
+
+  SuccessExchangeCoinsStates(this.exchangeCoins);
+}
 
 class ErrorExchangeCoinsStates extends ProfileStates{
 }

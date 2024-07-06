@@ -1,6 +1,4 @@
-
 import 'dart:convert';
-
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -8,17 +6,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 import '../shared/constants.dart';
+import '../widget/basic.dart';
+import '../widget/default_text_form_field..dart';
 import 'cubit_profile/cubit.dart';
 import 'cubit_profile/states.dart';
 
-
-
 class HomeScreen extends StatelessWidget {
-
   var amountController = TextEditingController();
-
   var userIdController = TextEditingController();
   var coinsValueController = TextEditingController();
+
+  HomeScreen({super.key});
 
   Future<void> _scanBarcode(BuildContext context) async {
     try {
@@ -45,15 +43,28 @@ class HomeScreen extends StatelessWidget {
     coinsValueController.clear();
     amountController.clear();
   }
-  HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context)  =>ProfileCubit(),
-      child: BlocConsumer<ProfileCubit,ProfileStates>(
-        listener: (BuildContext context,  state) {  },
-        builder: (BuildContext context,  state) {
+      create: (BuildContext context) => ProfileCubit(),
+      child: BlocConsumer<ProfileCubit, ProfileStates>(
+        listener: (BuildContext context, state) {
+          if (state is SuccessExchangeCoinsStates) {
+            if (state.exchangeCoins.success == true) {
+              Get.snackbar("Success", "The discount was successful",
+                  backgroundColor: Colors.green, colorText: Colors.white);
+              messageToast(msg: 'The discount was successful', state: ToastStates.SUCCESS);
+            } else {
+              Get.snackbar("Failed", "The number of coins is not available",
+                  backgroundColor: Colors.red, colorText: Colors.white);
+            }
+          } else if (state is ErrorExchangeCoinsStates) {
+            Get.snackbar("Error", "An error occurred while exchanging coins",
+                backgroundColor: Colors.red, colorText: Colors.white);
+          }
+        },
+        builder: (BuildContext context, state) {
           return Scaffold(
             body: Center(
               child: Padding(
@@ -68,11 +79,11 @@ class HomeScreen extends StatelessWidget {
                       decoration: InputDecoration(
                         labelText: 'User ID',
                         labelStyle: TextStyle(
-                            color: Color(0xff777A95),
+                          color: Color(0xff777A95),
                         ),
                         border: OutlineInputBorder(),
                         focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color:defaultColor)
+                          borderSide: BorderSide(color: controller2.app),
                         ),
                       ),
                     ),
@@ -87,7 +98,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         border: OutlineInputBorder(),
                         focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color:defaultColor)
+                          borderSide: BorderSide(color: controller2.app),
                         ),
                       ),
                     ),
@@ -95,9 +106,8 @@ class HomeScreen extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () => _scanBarcode(context),
                       child: Text('Scan QR Code'),
-                      style: ElevatedButton.styleFrom(backgroundColor: defaultColor),
+                      style: ElevatedButton.styleFrom(backgroundColor: controller2.app),
                     ),
-                    SizedBox(height: 10),
                     SizedBox(height: 10),
                     TextFormField(
                       controller: amountController,
@@ -109,7 +119,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         border: OutlineInputBorder(),
                         focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color:defaultColor)
+                          borderSide: BorderSide(color: controller2.app),
                         ),
                       ),
                     ),
@@ -118,16 +128,22 @@ class HomeScreen extends StatelessWidget {
                       condition: state is! LoadingExchangeCoinsStates,
                       builder: (context) => ElevatedButton(
                         onPressed: () {
-                           ProfileCubit.get(context).getExchangeCoins(
-                               amount: amountController.text,
-                               id: userIdController.text
-                           );
+                          if (amountController.text.isNotEmpty && userIdController.text.isNotEmpty) {
+                            ProfileCubit.get(context).getExchangeCoins(
+                              amount: amountController.text,
+                              id: userIdController.text,
+                            );
+                          } else {
+                            Get.snackbar("Error", "Please fill all fields",
+                                backgroundColor: Colors.red, colorText: Colors.white);
+                          }
                         },
                         child: Text('Exchange Coins'),
-                        style: ElevatedButton.styleFrom(backgroundColor: defaultColor),
+                        style: ElevatedButton.styleFrom(backgroundColor: controller2.app),
                       ),
-                      fallback: (context) =>
-                          Center(child: CircularProgressIndicator(color: defaultColor,)),
+                      fallback: (context) => Center(
+                        child: CircularProgressIndicator(color: controller2.app),
+                      ),
                     ),
                   ],
                 ),

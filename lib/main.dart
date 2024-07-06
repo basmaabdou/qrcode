@@ -6,10 +6,12 @@ import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:scan/scan_screen/cubit_profile/cubit.dart';
 import 'package:scan/scan_screen/home_screen.dart';
+import 'package:scan/setting_controller/theme_controller.dart';
 import 'package:scan/shared/bloc_observed.dart';
 import 'package:scan/shared/constants.dart';
 import 'package:scan/shared/network/local/cache_helper.dart';
 import 'package:scan/shared/network/remote/dio_helper.dart';
+import 'package:sizer/sizer.dart';
 
 import 'login/login_screen.dart';
 
@@ -39,13 +41,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context) => ProfileCubit()..getProfileData())
-        ],
-        child: GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: LoginScreen(),
-        ));
+    SettingController settingController=Get.put(SettingController());
+    return Sizer(
+        builder: (context, orientation, deviceType) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: HomeScreen(),
+      );
+        },
+    );
   }
 }

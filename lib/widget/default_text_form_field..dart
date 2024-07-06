@@ -1,9 +1,13 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:scan/shared/constants.dart';
 
+import '../setting_controller/theme_controller.dart';
 
-// SettingController controller2=Get.find();
+
+SettingController controller2=Get.find();
 Widget  defaultTextForm({
   required TextEditingController controller,
   required TextInputType type,
@@ -43,16 +47,16 @@ Widget  defaultTextForm({
           fontSize: 16
       ),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color:defaultColor, width: 2.0)
+        borderSide: BorderSide(color:controller2.app, width: 2.0)
       ),
       border:  OutlineInputBorder(borderRadius: BorderRadius.circular(8),),
       prefixIcon: Icon(
-        prefix ,color: defaultColor,
+        prefix ,color: controller2.app,
       ),
       suffixIcon: suffix != null ? IconButton(
         onPressed: suffixPressed,
         icon: Icon(
-          suffix,color: defaultColor,
+          suffix,color: controller2.app,
         ),
       ) : null,
 

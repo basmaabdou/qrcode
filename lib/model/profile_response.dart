@@ -27,40 +27,34 @@ class Data {
   String? username;
   String? email;
   String? phone;
-  Profilephoto? profilephoto;
   String? role;
   int? coins;
   bool? isAccountVerified;
   List<Orders>? orders;
+  String? qrcode;
   String? createdAt;
   String? updatedAt;
   int? iV;
-  String? qrcode;
 
   Data(
       {this.sId,
         this.username,
         this.email,
         this.phone,
-        this.profilephoto,
         this.role,
         this.coins,
         this.isAccountVerified,
         this.orders,
+        this.qrcode,
         this.createdAt,
         this.updatedAt,
-        this.iV,
-        this.qrcode
-      });
+        this.iV});
 
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     username = json['username'];
     email = json['email'];
     phone = json['phone'];
-    profilephoto = json['profilephoto'] != null
-        ? new Profilephoto.fromJson(json['profilephoto'])
-        : null;
     role = json['role'];
     coins = json['coins'];
     isAccountVerified = json['isAccountVerified'];
@@ -70,10 +64,10 @@ class Data {
         orders!.add(new Orders.fromJson(v));
       });
     }
+    qrcode = json['qrcode'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     iV = json['__v'];
-    qrcode = json['qrcode'];
   }
 
   Map<String, dynamic> toJson() {
@@ -82,43 +76,22 @@ class Data {
     data['username'] = this.username;
     data['email'] = this.email;
     data['phone'] = this.phone;
-    if (this.profilephoto != null) {
-      data['profilephoto'] = this.profilephoto!.toJson();
-    }
     data['role'] = this.role;
     data['coins'] = this.coins;
     data['isAccountVerified'] = this.isAccountVerified;
     if (this.orders != null) {
       data['orders'] = this.orders!.map((v) => v.toJson()).toList();
     }
+    data['qrcode'] = this.qrcode;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
     data['__v'] = this.iV;
-    data['qrcode'] = this.qrcode;
-    return data;
-  }
-}
-
-class Profilephoto {
-  String? url;
-  Null? publicId;
-
-  Profilephoto({this.url, this.publicId});
-
-  Profilephoto.fromJson(Map<String, dynamic> json) {
-    url = json['url'];
-    publicId = json['publicId'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['url'] = this.url;
-    data['publicId'] = this.publicId;
     return data;
   }
 }
 
 class Orders {
+  Image? image;
   String? sId;
   String? itemsName;
   String? location;
@@ -131,7 +104,8 @@ class Orders {
   int? iV;
 
   Orders(
-      {this.sId,
+      {this.image,
+        this.sId,
         this.itemsName,
         this.location,
         this.charity,
@@ -143,6 +117,7 @@ class Orders {
         this.iV});
 
   Orders.fromJson(Map<String, dynamic> json) {
+    image = json['image'] != null ? new Image.fromJson(json['image']) : null;
     sId = json['_id'];
     itemsName = json['itemsName'];
     location = json['location'];
@@ -158,6 +133,9 @@ class Orders {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.image != null) {
+      data['image'] = this.image!.toJson();
+    }
     data['_id'] = this.sId;
     data['itemsName'] = this.itemsName;
     data['location'] = this.location;
@@ -173,6 +151,26 @@ class Orders {
     return data;
   }
 }
+
+class Image {
+  String? url;
+  String? publicId;
+
+  Image({this.url, this.publicId});
+
+  Image.fromJson(Map<String, dynamic> json) {
+    url = json['url'];
+    publicId = json['publicId'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['url'] = this.url;
+    data['publicId'] = this.publicId;
+    return data;
+  }
+}
+
 class Charity {
   String? sId;
   String? title;
