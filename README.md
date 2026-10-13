@@ -14,8 +14,8 @@ State management: Bloc / Cubit
 Networking: Dio (REST APIs)
 Scanning: flutter_barcode_scanner
 Local storage: shared_preferences
+
 Run the project
-bash
 git clone https://github.com/basmaabdou/qrcode.git
 cd qrcode
 flutter pub get
