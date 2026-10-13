@@ -1,16 +1,22 @@
-# scan
+Sadaka QR Scanner
 
-A new Flutter project.
+A Flutter app used by the admin side of the Sadaka donation app. It scans a donor's QR code and exchanges the user's reward coins through the backend API.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<!-- ## Screenshots <p float="left"> <img src="screenshots/login.png" width="200" /> <img src="screenshots/scan.png" width="200" /> </p> -->
+Features
+Admin login
+QR code scanning with the device camera
+Exchange and update the user's reward coins through the API
+Light/dark theme controller
+Tech Stack
+Flutter / Dart
+State management: Bloc / Cubit
+Networking: Dio (REST APIs)
+Scanning: flutter_barcode_scanner
+Local storage: shared_preferences
+Run the project
+bash
+git clone https://github.com/basmaabdou/qrcode.git
+cd qrcode
+flutter pub get
+flutter run
